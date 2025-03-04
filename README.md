@@ -28,6 +28,7 @@ or
 python3 --version
 ```
 
+If not install it from [here](https://www.python.org/downloads/)
 ### Running the Program
 1. Clone this repository
 ```console
