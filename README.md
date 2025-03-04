@@ -79,7 +79,3 @@ Output:
  - `solver(grid, size)`: Iteratively solves the puzzle using logical techniques.
 
  - `main()`: Runs the entire program.
-
-## License
-
-This project is open-source and available under the [MIT License](https://mit-license.org/).
