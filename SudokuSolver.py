@@ -1,9 +1,11 @@
 #Solve a sudoku puzzle
 import math;
 
-# Allow the user to input (with validation) the size of the sudoku grid (must be a square number)
 def input_size():
-    #Get size of puzzle
+    '''
+    Return the user defined size of the Sudoku grid
+    Must be a square number
+    '''
     valid = False
     while valid != True:
         try:
@@ -16,9 +18,11 @@ def input_size():
             print("Must be a valid integer")
     return size
 
-# Allow the user to input (with validation) their sudoku grid
 def input_puzzle(size):
-    #Get value for each square in puzzle
+    '''
+    Take and return puzzle input
+    Empty squares are stored as a 0 (which can not occur in a valid puzzle)
+    '''
     print("Use 0 to indicate an empty space")
     puzz = []
     for i in range(0,size):
@@ -45,8 +49,9 @@ def input_puzzle(size):
     
     return puzz
 
-# Return a list of all possible values a box could be
 def check_box(grid, size, i, j):
+    '''Return a list of all possible values a box could be
+    '''
     # Ensures rest of code only executed if the square is empty
     if(grid[i][j] != 0):
         return []
@@ -72,8 +77,9 @@ def check_box(grid, size, i, j):
         poss.remove(item)
     return poss
 
-# Checks whether a box can contain a specific number
 def check_box_num(grid, size, i, j, num):
+    ''' Return (bool) whether a box can contain a specific number
+    '''
     # Ensures rest of code only executed if the square is empty
     if(grid[i][j] != 0):
         return False
@@ -96,8 +102,9 @@ def check_box_num(grid, size, i, j, num):
                     poss = False
     return poss
 
-# Return a list of all the possible places in a row a number could appear
 def check_row(grid, size, i, num):
+    '''Return a list of all the possible places in a row a number could appear
+    '''
     row = grid[i]
     poss = []
     if num in row:
@@ -109,8 +116,9 @@ def check_row(grid, size, i, num):
 
     return poss
 
-# Return a list of all the possible places in a column a number could appear
 def check_col(grid, size, j, num):
+    '''Return a list of all the possible places in a column a number could appear
+    '''
     col = list(row[j] for row in grid)
     poss = []
     if num in col:
@@ -122,8 +130,9 @@ def check_col(grid, size, j, num):
 
     return poss
 
-# Return a list of all the possible places in a square a number could appear
 def check_square(grid, size, i, j, num):
+    '''Return a list of all the possible places in a square a number could appear
+    '''
     root = int(math.sqrt(size))
     poss = []
     for k in range(int((i//root) * root),int(((i//root)*root)+root)):
@@ -133,17 +142,18 @@ def check_square(grid, size, i, j, num):
 
     return poss
 
-# Checks if the sudoku has been fully solved
 def solved(grid, size):
+    '''Checks if the sudoku has been fully solved
+    '''
     for i in range(0, size):
         for j in range(0, size):
             if(grid[i][j] == 0):
                 return False
     return True
 
-# Solve the puzzle
 def solver(grid, size):
-    
+    '''Return the solved puzzle
+    '''
 
     while(solved(grid, size) == False):
         change = True
@@ -174,8 +184,9 @@ def solver(grid, size):
 
     return grid
 
-# Call the relevant subroutines in order and output the result
 def main():
+    '''Call the relevant subroutines in order and output the result
+    '''
     size = input_size()
     grid = input_puzzle(size)
     grid = solver(grid, size)
