@@ -1,8 +1,9 @@
 # Solve a sudoku puzzle
 import math
 
+
 class Solver:
-    def __init__(self, size:int, grid:list[list[int]]):
+    def __init__(self, size: int, grid: list[list[int]]):
         self.size = size
         self.grid = grid
 
@@ -19,11 +20,11 @@ class Solver:
         root = math.sqrt(self.size)
         rem = list()
 
-        # Iterate over each possible number, removing any it can't be from the list
+        # Iterate over possible numbers, removing impossible ones from list
         for num in poss:
             if (num in self.grid[i]):
                 # Num cannot be removed from poss during iteration
-                # This would affect the indexes and cause some values to be skipped
+                # This would affect the indexes and cause values to be skipped
                 rem.append(num)
             elif (num in col):
                 rem.append(num)
@@ -40,7 +41,6 @@ class Solver:
         for item in rem:
             poss.remove(item)
         return poss
-
 
     def check_box_num(self, i, j, num):
         ''' Return (bool) whether a box can contain a specific number
@@ -72,9 +72,9 @@ class Solver:
                         poss = False
         return poss
 
-
     def check_row(self, i, num):
-        '''Return a list of all the possible places in a row a number could appear
+        '''
+        Return a list of all the possible places in a row a number could appear
         '''
         row = self.grid[i]
         poss = []
@@ -87,9 +87,9 @@ class Solver:
 
         return poss
 
-
     def check_col(self, i, j, num):
-        '''Return a list of all the possible places in a col a number could appear
+        '''
+        Return a list of all the possible places in a col a number could appear
         '''
         col = list(row[j] for row in self.grid)
         poss = []
@@ -102,32 +102,35 @@ class Solver:
 
         return poss
 
-
     def check_square(self, i, j, num):
-        '''Return a list of all possible places in a square a number could appear
+        '''
+        Return a list of all possible places in a square a number could appear
         '''
         root = int(math.sqrt(self.size))
         poss = []
         for indexK in range(int((i//root) * root), int(((i//root)*root)+root)):
-            for indexL in range(int((j//root) * root), int(((j//root)*root)+root)):
+            for indexL in range(int((j//root) * root),
+                                int(((j//root)*root)+root)
+                                ):
                 if (self.check_box_num(indexK, indexL, num)):
                     poss.append([indexK, indexL])
 
         return poss
 
-
     def solved(self):
-        '''Checks if the sudoku has been fully solved
         '''
+        Checks if the sudoku has been fully solved
+        '''
+
         for i in range(0, self.size):
             for j in range(0, self.size):
                 if (self.grid[i][j] == 0):
                     return False
         return True
 
-
     def solve(self):
-        '''Return the solved puzzle
+        '''
+        Return the solved puzzle
         '''
 
         while (self.solved() is False):
@@ -147,7 +150,6 @@ class Solver:
                     if (len(pos) == 1):
                         self.grid[pos[0][0]][pos[0][1]] = num
 
-                    pows = self.check_col(i, num)
                     if (len(pos) == 1):
                         self.grid[pos[0][0]][pos[0][1]] = num
 
@@ -210,6 +212,7 @@ def input_puzzle(size):
 
     return puzz
 
+
 def read_csv():
     '''
     Import sudoku from csv for debugging
@@ -225,8 +228,6 @@ def read_csv():
     return grid
 
 
-
-
 def main():
     '''Call the relevant subroutines in order and output the result
     '''
@@ -235,7 +236,7 @@ def main():
     size = 9
     grid = read_csv()
 
-    solver = Solver(grid, size)
+    solver = Solver(size, grid)
     solver.solve()
 
     for line in grid:
