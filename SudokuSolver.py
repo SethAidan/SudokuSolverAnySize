@@ -6,7 +6,7 @@ class Solver:
         self.size = size
         self.grid = grid
 
-    def check_box(grid, size, i, j):
+    def check_box(self, grid, size, i, j):
         '''Return a list of all possible values a box could be
         '''
         # Ensures rest of code only executed if the square is empty
@@ -42,7 +42,7 @@ class Solver:
         return poss
 
 
-    def check_box_num(grid, size, i, j, num):
+    def check_box_num(self, grid, size, i, j, num):
         ''' Return (bool) whether a box can contain a specific number
         '''
         # Ensures rest of code only executed if the square is empty
@@ -73,7 +73,7 @@ class Solver:
         return poss
 
 
-    def check_row(grid, size, i, num):
+    def check_row(self, grid, size, i, num):
         '''Return a list of all the possible places in a row a number could appear
         '''
         row = grid[i]
@@ -82,13 +82,13 @@ class Solver:
             return []
 
         for j in range(0, size):
-            if (check_box_num(grid, size, i, j, num)):
+            if (self.check_box_num(grid, size, i, j, num)):
                 poss.append([i, j])
 
         return poss
 
 
-    def check_col(grid, size, j, num):
+    def check_col(self, grid, size, j, num):
         '''Return a list of all the possible places in a col a number could appear
         '''
         col = list(row[j] for row in grid)
@@ -97,26 +97,26 @@ class Solver:
             return []
 
         for i in range(0, size):
-            if (check_box_num(grid, size, i, j, num)):
+            if (self.check_box_num(grid, size, i, j, num)):
                 poss.append([i, j])
 
         return poss
 
 
-    def check_square(grid, size, i, j, num):
+    def check_square(self, grid, size, i, j, num):
         '''Return a list of all possible places in a square a number could appear
         '''
         root = int(math.sqrt(size))
         poss = []
         for indexK in range(int((i//root) * root), int(((i//root)*root)+root)):
             for indexL in range(int((j//root) * root), int(((j//root)*root)+root)):
-                if (check_box_num(grid, size, indexK, indexL, num)):
+                if (self.check_box_num(grid, size, indexK, indexL, num)):
                     poss.append([indexK, indexL])
 
         return poss
 
 
-    def solved(grid, size):
+    def solved(self, grid, size):
         '''Checks if the sudoku has been fully solved
         '''
         for i in range(0, size):
@@ -126,33 +126,33 @@ class Solver:
         return True
 
 
-    def solver(grid, size):
+    def solver(self, grid, size):
         '''Return the solved puzzle
         '''
 
-        while (solved(grid, size) is False):
+        while (self.solved(grid, size) is False):
             change = True
             while (change):
                 change = False
                 for i in range(0, size):
                     for j in range(0, size):
-                        pos = check_box(grid, size, i, j)
+                        pos = self.check_box(grid, size, i, j)
                         if (len(pos) == 1 and grid[i][j] == 0):
                             grid[i][j] = pos[0]
                             change = True
 
             for num in range(0, size):
                 for i in range(0, size):
-                    pos = check_row(grid, size, i, num)
+                    pos = self.check_row(grid, size, i, num)
                     if (len(pos) == 1):
                         grid[pos[0][0]][pos[0][1]] = num
 
-                    pows = check_col(grid, size, i, num)
+                    pows = self.check_col(grid, size, i, num)
                     if (len(pos) == 1):
                         grid[pos[0][0]][pos[0][1]] = num
 
                     for j in range(0, size):
-                        pos = check_square(grid, size, i, j, num)
+                        pos = self.check_square(grid, size, i, j, num)
                         if (len(pos) == 1):
                             grid[pos[0][0]][pos[0][1]] = num
 
