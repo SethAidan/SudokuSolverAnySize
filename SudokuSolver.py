@@ -231,10 +231,8 @@ def read_csv():
 def main():
     '''Call the relevant subroutines in order and output the result
     '''
-    # size = input_size()
-    # grid = input_puzzle(size)
-    size = 9
-    grid = read_csv()
+    size = input_size()
+    grid = input_puzzle(size)
 
     solver = Solver(size, grid)
     solver.solve()
