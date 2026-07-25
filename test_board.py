@@ -58,7 +58,7 @@ def test_init_invalid_value():
     with pytest.raises(ValueError) as e_info:
             bd = Board(filename="test/test9Invalid.csv")
 
-def test_init_filename_9_list():
+def test_init_list_9():
     bd = Board(grid = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
                        [6, 0, 0, 1, 9, 5, 0, 0, 0],
                        [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -81,7 +81,7 @@ def test_init_filename_9_list():
 
     assert bd.size == 9
 
-def test_init_filename_4_list():
+def test_init_list_4():
     bd = Board(grid = [[0, 3, 0, 2],
                        [0, 0, 4, 3],
                        [2, 0, 3, 0],
@@ -94,7 +94,7 @@ def test_init_filename_4_list():
 
     assert bd.size == 4
 
-def test_init_filename_16_list():
+def test_init_list_16():
     bd = Board(grid = [[10, 0, 6, 9, 0, 12, 3, 1, 16, 7, 0, 2, 13, 0, 8, 5],
                         [0, 8, 12, 5, 15, 2, 0, 13, 0, 4, 1, 14, 10, 0, 0, 6],
                         [0, 3, 0, 13, 16, 4, 10, 5, 12, 0, 6, 11, 0, 15, 2, 0],
@@ -153,3 +153,135 @@ def test_init_invalid_value_grid():
                        [0, 6, 0, 0, 0, 0, 2, 8, 0],
                        [0, 0, 0, 4, 1, 9, 0, 0, 5],
                        [0, 0, 0, 0, 8, 0, 0, 7, 9]])
+
+def test_validate_list_9():
+    grid = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
+                            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                            [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                            [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                            [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                            [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                            [0, 0, 0, 0, 8, 0, 0, 7, 9]]
+
+    vald, reason = Board.validate(grid)
+
+    assert vald == True
+    assert reason == "All good"
+
+def test_validate_list_4():
+    grid = [[0, 3, 0, 2],
+                       [0, 0, 4, 3],
+                       [2, 0, 3, 0],
+                       [3, 4, 0, 0]]
+
+    vald, reason = Board.validate(grid)
+
+    assert vald == True
+    assert reason == "All good"
+
+def test_validate_list_16():
+    grid = [[10, 0, 6, 9, 0, 12, 3, 1, 16, 7, 0, 2, 13, 0, 8, 5],
+                        [0, 8, 12, 5, 15, 2, 0, 13, 0, 4, 1, 14, 10, 0, 0, 6],
+                        [0, 3, 0, 13, 16, 4, 10, 5, 12, 0, 6, 11, 0, 15, 2, 0],
+                        [0, 15, 11, 0, 0, 0, 0, 6, 0, 10, 0, 0, 12, 0, 16, 1],
+                        [0, 0, 15, 0, 5, 1, 13, 10, 0, 6, 16, 0, 4, 0, 0, 2],
+                        [11, 10, 0, 0, 3, 8, 4, 14, 15, 13, 2, 9, 5, 0, 0, 0],
+                        [0, 0, 7, 4, 2, 0, 9, 0, 5, 0, 3, 0, 14, 0, 1, 0],
+                        [5, 0, 0, 3, 0, 0, 0, 11, 10, 0, 14, 4, 16, 8, 15, 13],
+                        [15, 0, 0, 0, 10, 11, 2, 9, 0, 0, 7, 6, 3, 1, 13, 0],
+                        [4, 1, 0, 6, 0, 3, 0, 0, 2, 15, 0, 0, 11, 0, 14, 10],
+                        [7, 16, 13, 11, 0, 15, 14, 12, 4, 3, 0, 10, 6, 2, 5, 0],
+                        [3, 2, 0, 10, 4, 0, 6, 8, 14, 11, 13, 1, 0, 0, 12, 0],
+                        [9, 0, 0, 14, 12, 0, 1, 2, 13, 5, 11, 16, 8, 6, 0, 0],
+                        [0, 5, 10, 0, 6, 0, 11, 16, 1, 0, 4, 12, 0, 0, 7, 3],
+                        [0, 11, 0, 1, 14, 0, 0, 4, 6, 2, 8, 0, 9, 0, 10, 12],
+                        [12, 6, 4, 0, 0, 13, 5, 3, 7, 9, 0, 15, 0, 0, 11, 0]]
+
+    vald, reason = Board.validate(grid)
+
+    assert vald == True
+    assert reason == "All good"
+
+def test_validate_not_list():
+    grid = "5, 3, 0, 0, 7, 0, 0, 0, 0"
+    
+    vald, reason = Board.validate(grid)
+
+    assert vald == False
+    assert reason == "Top level not a list, <class 'str'>"
+
+    grid = False
+        
+    vald, reason = Board.validate(grid)
+
+    assert vald == False
+    assert reason == "Top level not a list, <class 'bool'>"
+
+    grid = 5
+            
+    vald, reason = Board.validate(grid)
+
+    assert vald == False
+    assert reason == "Top level not a list, <class 'int'>"
+
+def test_validate_not_square():
+    grid = [[5, 3, 0, 0, 7, 0, 0, 0],
+            [6, 0, 0, 1, 7, 5, 0, 0],
+            [0, 2, 8, 0, 0, 0, 0, 6],
+            [8, 0, 0, 0, 6, 0, 0, 0],
+            [4, 0, 0, 8, 0, 3, 0, 0],
+            [7, 0, 0, 0, 2, 0, 0, 0],
+            [0, 6, 0, 0, 0, 0, 2, 8],
+            [0, 0, 0, 4, 1, 4, 0, 0]]
+
+    vald, reason = Board.validate(grid)
+
+    assert vald == False
+    assert reason == "Num lines not square"
+
+def test_validate_not_2d():
+    grid = [5, 3, 0, 0, 7, 0, 0, 0, 0]
+
+    vald, reason = Board.validate(grid)
+
+    assert vald == False
+    assert reason == "Not a 2d list"
+
+def test_validate_line_not_match():
+    grid = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 0, 0, 3],
+            [4, 0, 0, 8, 0, 3, 0, 0, 1],
+            [7, 0, 0, 0, 2, 0, 0, 0, 6],
+            [0, 6, 0, 0, 0, 0, 2, 8, 0],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 7, 9]]
+
+    vald, reason = Board.validate(grid)
+
+    assert vald == False
+    assert reason == "line does not match num of lines: [6, 0, 0, 1, 9, 5, 0, 0]"
+
+def test_validate_invalid_val():
+    grid = [[0, 3, 0, 2],
+            [0, -1, 4, 3],
+            [2, 0, 3, 0],
+            [3, 4, 0, 0]]
+
+    vald, reason = Board.validate(grid)
+
+    assert vald == False
+    assert reason == "Invalid value: -1"
+
+    grid = [[0, 3, 0, 2],
+            [0, 'M', 4, 3],
+            [2, 0, 3, 0],
+            [3, 4, 0, 0]]
+
+    vald, reason = Board.validate(grid)
+
+    assert vald == False
+    assert reason == "Invalid value: M"
