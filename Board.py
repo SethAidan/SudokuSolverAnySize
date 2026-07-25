@@ -14,7 +14,7 @@ class Board:
             raise ValueError("No grid or filename given")
 
         # Read file into 2d list
-        else:
+        elif (grid is None):
             grid = []
             with open(filename, "r") as file:
                 for line in file:
