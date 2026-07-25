@@ -1,28 +1,29 @@
 # Solve a sudoku puzzle
 import math
+from Board import Board
 
 
 class Solver:
-    def __init__(self, size: int, grid: list[list[int]]):
-        self.size = size
-        self.grid = grid
+    def __init__(self, board: Board):
+        self.board = board
 
     def check_box(self, i, j):
-        '''Return a list of all possible values a box could be
+        '''
+        Return a list of all possible values a box could be
         '''
         # Ensures rest of code only executed if the square is empty
-        if (self.grid[i][j] != 0):
+        if (self.board.grid[i][j] != 0):
             return []
 
         # Poss initialised with every possible value and then wittled down
-        poss = list(range(1, self.size+1))
-        col = list(row[j] for row in self.grid)
-        root = math.sqrt(self.size)
+        poss = list(range(1, self.board.size+1))
+        col = list(row[j] for row in self.board.grid)
+        root = math.sqrt(self.board.size)
         rem = list()
 
         # Iterate over possible numbers, removing impossible ones from list
         for num in poss:
-            if (num in self.grid[i]):
+            if (num in self.board.grid[i]):
                 # Num cannot be removed from poss during iteration
                 # This would affect the indexes and cause values to be skipped
                 rem.append(num)
@@ -36,7 +37,7 @@ class Solver:
                     minL = int((j//root) * root)
                     maxL = int(((j//root)*root)+root)
                     for indexL in range(minL, maxL):
-                        if (self.grid[indexK][indexL] == num):
+                        if (self.board.grid[indexK][indexL] == num):
                             rem.append(num)
         for item in rem:
             poss.remove(item)
@@ -46,16 +47,16 @@ class Solver:
         ''' Return (bool) whether a box can contain a specific number
         '''
         # Ensures rest of code only executed if the square is empty
-        if (self.grid[i][j] != 0):
+        if (self.board.grid[i][j] != 0):
             return False
 
         poss = True
-        col = list(row[j] for row in self.grid)
-        root = math.sqrt(self.size)
+        col = list(row[j] for row in self.board.grid)
+        root = math.sqrt(self.board.size)
 
         # Iterate through each possible number
         # Eliminate any it cannot be from the list
-        if (num in self.grid[i]):
+        if (num in self.board.grid[i]):
             poss = False
         elif (num in col):
             poss = False
@@ -68,7 +69,7 @@ class Solver:
                 minL = int((j//root) * root)
                 maxL = int(((j//root)*root)+root)
                 for indexL in range(minL, maxL):
-                    if (self.grid[indexK][indexL] == num):
+                    if (self.board.grid[indexK][indexL] == num):
                         poss = False
         return poss
 
@@ -76,12 +77,12 @@ class Solver:
         '''
         Return a list of all the possible places in a row a number could appear
         '''
-        row = self.grid[i]
+        row = self.board.grid[i]
         poss = []
         if num in row:
             return []
 
-        for j in range(0, self.size):
+        for j in range(0, self.board.size):
             if (self.check_box_num(i, j, num)):
                 poss.append([i, j])
 
@@ -91,12 +92,12 @@ class Solver:
         '''
         Return a list of all the possible places in a col a number could appear
         '''
-        col = list(row[j] for row in self.grid)
+        col = list(row[j] for row in self.board.grid)
         poss = []
         if num in col:
             return []
 
-        for i in range(0, self.size):
+        for i in range(0, self.board.size):
             if (self.check_box_num(i, j, num)):
                 poss.append([i, j])
 
@@ -106,7 +107,7 @@ class Solver:
         '''
         Return a list of all possible places in a square a number could appear
         '''
-        root = int(math.sqrt(self.size))
+        root = int(math.sqrt(self.board.size))
         poss = []
         for indexK in range(int((i//root) * root), int(((i//root)*root)+root)):
             for indexL in range(int((j//root) * root),
@@ -122,9 +123,9 @@ class Solver:
         Checks if the sudoku has been fully solved
         '''
 
-        for i in range(0, self.size):
-            for j in range(0, self.size):
-                if (self.grid[i][j] == 0):
+        for i in range(0, self.board.size):
+            for j in range(0, self.board.size):
+                if (self.board.grid[i][j] == 0):
                     return False
         return True
 
@@ -137,29 +138,29 @@ class Solver:
             change = True
             while (change):
                 change = False
-                for i in range(0, self.size):
-                    for j in range(0, self.size):
+                for i in range(0, self.board.size):
+                    for j in range(0, self.board.size):
                         pos = self.check_box(i, j)
-                        if (len(pos) == 1 and self.grid[i][j] == 0):
-                            self.grid[i][j] = pos[0]
+                        if (len(pos) == 1 and self.board.grid[i][j] == 0):
+                            self.board.grid[i][j] = pos[0]
                             change = True
 
-            for num in range(0, self.size):
-                for i in range(0, self.size):
+            for num in range(0, self.board.size):
+                for i in range(0, self.board.size):
                     pos = self.check_row(i, num)
                     if (len(pos) == 1):
-                        self.grid[pos[0][0]][pos[0][1]] = num
+                        self.board.grid[pos[0][0]][pos[0][1]] = num
 
                     if (len(pos) == 1):
-                        self.grid[pos[0][0]][pos[0][1]] = num
+                        self.board.grid[pos[0][0]][pos[0][1]] = num
 
-                    for j in range(0, self.size):
+                    for j in range(0, self.board.size):
                         pos = self.check_square(i, j, num)
                         if (len(pos) == 1):
-                            self.grid[pos[0][0]][pos[0][1]] = num
+                            self.board.grid[pos[0][0]][pos[0][1]] = num
 
     def getGrid(self):
-        return self.grid
+        return self.board.grid
 
 
 def input_size():
@@ -229,16 +230,12 @@ def read_csv():
 
 
 def main():
-    '''Call the relevant subroutines in order and output the result
     '''
-    size = input_size()
-    grid = input_puzzle(size)
-
-    solver = Solver(size, grid)
+    Call the relevant subroutines in order and output the result
+    '''
+    bd = Board(filename="test.csv")
+    solver = Solver(bd)
     solver.solve()
-
-    for line in grid:
-        print(line)
 
 
 main()
