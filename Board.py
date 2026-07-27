@@ -65,6 +65,19 @@ class Board:
 
         return True, "All good"
 
+    @staticmethod
+    def solved(grid, size):
+        '''
+        Check if a solution has been found
+        '''
+        
+        for i in range(size):
+            for j in range(size):
+                if (grid[i][j] == 0):
+                    return False
+
+        return True
+
     def display_grid(self):
         '''
         Print grid as a 2d grid
