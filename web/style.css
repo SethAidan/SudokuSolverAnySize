@@ -1,0 +1,33 @@
+h1{
+    text-align: center;
+    color: green;
+}
+
+form{
+  display: block;
+  width: 100%;
+}
+
+input {
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid gray;
+  border-radius: 8px;
+}
+
+input:focus{
+  border: 2px solid black;
+}
+
+.bttn{
+  width: 100px;
+  background-color: gray;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 14px lightgray;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
