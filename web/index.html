@@ -2,30 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css">
     <title>Eel Example</title>
-    <style>
-      h1{
-        color: green;
-        text-align: center;
-      }
-      .random_number{
-        margin: 50px;
-        font-size: 150px;
-        text-align: center;
-      }
-      button{
-        display: block;
-        margin: 0 auto;
-      }
-    </style>
   </head>
   <body>
-    <h1>Geeks for Geeks</h1>
-    <div class="random_number"></div>
-    <button>Get a Random number using Python</button>
+    
+
+    <!-- Enter Sudoku Information -->
+    <h1>Solve Sudoku</h1>
+    <div id="get-size">
+        <label>Sudoku Size: </label><input type="text" id="size"><br>
+        <input type="submit" onclick="getSize()" id="size-sub" class="bttn">
+    </div>
+
+
+
+    <!-- Leave Alone -->
     <script type="text/javascript" src="/eel.js"></script>
     <script src="./script.js"></script>
   </body>
